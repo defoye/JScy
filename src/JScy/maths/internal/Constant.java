@@ -1,26 +1,26 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Constant extends Expression {
+public class Constant extends Expression {
 
     double value;
 
-    Constant(double value) {
+    public Constant(double value) {
 
         this.value = value;
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
 
         return new Constant(0);
     }
 
     @Override
-    Constant simplify() {
+    public Constant simplify() {
 
         return this;
     }

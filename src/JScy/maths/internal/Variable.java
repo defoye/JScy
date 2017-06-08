@@ -1,23 +1,24 @@
-package maths;
+package JScy.maths.internal;
+
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Variable extends Expression {
+public class Variable extends Expression {
 
     String value;
 
-    Variable(String value) {
+    public Variable(String value) {
         this.value = value;
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
         return new Constant(1);
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
         return this;
     }
 }

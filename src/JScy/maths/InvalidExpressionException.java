@@ -1,4 +1,4 @@
-package maths;
+package JScy.maths;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>

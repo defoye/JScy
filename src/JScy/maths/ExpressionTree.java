@@ -1,4 +1,6 @@
-package maths;
+package JScy.maths;
+
+import JScy.maths.internal.*;import JScy.maths.maths.internal.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -32,8 +34,46 @@ class ExpressionTree {
         return root;
     }
 
+    //creates string representing infix expression
+    private String createInfix(Expression root)
+    {
+        String str = "";
+
+        if(root == null) {
+            return str;
+        }
+
+        if (root != null) {
+
+            if (root.g == null) {
+                str += root.getVal();
+
+            }
+            else if(root.getType().equals("unaryMinus")) {
+                str += "-";
+            }
+            else if(root) { // does not include unary minus
+                str += root.getVal();
+                //str += "(";
+            }
+            else {
+                int parentPrecedence = getPrecedence(root.getVal());
+
+                str += root.getVal();
+                if(root.getLeftChild() != null && (getPrecedence(root.getLeftChild().getVal()) < parentPrecedence || isLeftAssociative(root.getLeftChild().getVal()))) {
+                    //str += "(";
+                }
+				/*if(getPrecedence(root.getRightChild().getVal()) < parentPrecedence) {
+					str += ")";
+				}*/
+            }
+        }
+
+        return createInfix(root.getLeftChild()) + str + createInfix(root.getRightChild());
+    }
+
     // reads the "tokens" in order from the list and builds a tree
-    public Expression constructTree(ArrayList<String> postTokens)
+    private Expression constructTree(ArrayList<String> postTokens)
     {
         Expression root = null;
         Stack<Expression> nodes = new Stack<>();

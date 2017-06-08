@@ -1,10 +1,10 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Sum extends BinaryOperation {
+public class Sum extends BinaryNode {
 
     public Sum(Expression left, Expression right) {
 
@@ -12,12 +12,12 @@ class Sum extends BinaryOperation {
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
         return new Sum(left.derive(), right.derive());
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
         return null;
     }
 }

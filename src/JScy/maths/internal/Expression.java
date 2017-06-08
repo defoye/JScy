@@ -1,12 +1,12 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-abstract class Expression {
-    abstract Expression derive();
-    abstract Expression simplify();
+public abstract class Expression {
+    public abstract Expression derive();
+    public abstract Expression simplify();
 
     enum BinaryOperator {
 

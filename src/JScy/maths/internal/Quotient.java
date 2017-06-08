@@ -1,18 +1,18 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Quotient extends BinaryOperation {
+public class Quotient extends BinaryNode {
 
-   Quotient(Expression left, Expression right) {
+   public Quotient(Expression left, Expression right) {
 
        super(left, right, BinaryOperator.DIVIDE);
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
         return new Quotient(
                 new Difference(
                         new Product(left.derive(), right),
@@ -23,7 +23,7 @@ class Quotient extends BinaryOperation {
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
         return null;
     }
 }

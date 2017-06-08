@@ -1,10 +1,10 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Exponent extends BinaryOperation {
+class Exponent extends BinaryNode {
 
     Exponent(Expression left, Expression right) {
 
@@ -12,13 +12,13 @@ class Exponent extends BinaryOperation {
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
 
         return null;
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
 
         return new Exponent(left.simplify(), right.simplify());
     }

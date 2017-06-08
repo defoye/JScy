@@ -1,23 +1,23 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class NaturalLogarithm extends UnaryOperation {
+public class NaturalLogarithm extends UnaryNode {
 
-    NaturalLogarithm(Expression exp) {
+    public NaturalLogarithm(Expression exp) {
 
         super(exp, UnaryOperator.NATURALLOG);
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
         return new Quotient(exp.derive(), exp);
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
         return null;
     }
 }

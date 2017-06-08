@@ -1,23 +1,23 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Negation extends UnaryOperation {
+public class Negation extends UnaryNode {
 
-    Negation(Expression exp) {
+    public Negation(Expression exp) {
 
         super(exp, UnaryOperator.NEGATE);
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
         return new Negation(exp.derive());
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
         return null;
     }
 }

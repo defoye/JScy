@@ -1,4 +1,4 @@
-package maths;
+package JScy.maths;
 
 import java.util.ArrayList;
 import java.util.Stack;

@@ -1,10 +1,10 @@
-package maths;
+package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class Difference extends BinaryOperation {
+public class Difference extends BinaryNode {
 
     public Difference(Expression left, Expression right) {
 
@@ -12,13 +12,13 @@ class Difference extends BinaryOperation {
     }
 
     @Override
-    Expression derive() {
+    public Expression derive() {
 
         return new Difference(left.derive(), right.derive());
     }
 
     @Override
-    Expression simplify() {
+    public Expression simplify() {
 
         Expression l = left.simplify();
         Expression r = right.simplify();

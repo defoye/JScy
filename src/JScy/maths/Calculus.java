@@ -1,6 +1,4 @@
-package maths;
-
-import maths.InvalidExpressionException;
+package JScy.maths;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
@@ -8,11 +6,17 @@ import maths.InvalidExpressionException;
  */
 public final class Calculus {
 
-    public static String derive(String expression) throws InvalidExpressionException {
+    private static String expression;
 
-        ExpressionParser parser = new ExpressionParser(expression);
+    public static String derive(String expression) throws InvalidExpressionException {
+        Calculus.expression = expression;
+
+        ExpressionParser parser = new ExpressionParser();
+        parser.parse(expression);
 
         ExpressionTree expTree = new ExpressionTree(parser.getVar(), parser.getTokens());
+
+        expTree.getRoot().derive();
 
         return null;
     }
