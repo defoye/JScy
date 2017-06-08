@@ -1,5 +1,4 @@
-import maths.*;
-import maths.internal.Variable;
+import JScy.maths.internal.Variable;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
