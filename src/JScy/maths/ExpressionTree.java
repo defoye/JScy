@@ -1,6 +1,13 @@
+/*
+ *  UNFINISHED
+ *
+ *  TODO: private String createInfix(Expression root)
+ *      TODO: second if statement
+ */
+
 package JScy.maths;
 
-import JScy.maths.internal.*;import JScy.maths.maths.internal.*;
+import JScy.maths.internal.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -43,30 +50,27 @@ class ExpressionTree {
             return str;
         }
 
-        if (root != null) {
+        if (ExpressionParser.isOperand(root.getType(), var)) {
+            str += root.getType();
 
-            if (root.g == null) {
-                str += root.getVal();
+        }
+        else if(root.getType().equals("$")) {
+            str += "-";
+        }
+        else if(ExpressionParser.isFunction(root.getType())) { // does not include unary minus
+            str += root.getType();
+            //str += "(";
+        }
+        else {
+            int parentPrecedence = ExpressionParser.getPrecedence(root.getType());
 
-            }
-            else if(root.getType().equals("unaryMinus")) {
-                str += "-";
-            }
-            else if(root) { // does not include unary minus
-                str += root.getVal();
+            str += root.getType();
+            if(root.getLeftChild() != null && (ExpressionParser.getPrecedence(root.getLeftChild().getType()) < parentPrecedence || ExpressionParser.isLeftAssociative(root.getLeftChild().getType()))) {
                 //str += "(";
             }
-            else {
-                int parentPrecedence = getPrecedence(root.getVal());
-
-                str += root.getVal();
-                if(root.getLeftChild() != null && (getPrecedence(root.getLeftChild().getVal()) < parentPrecedence || isLeftAssociative(root.getLeftChild().getVal()))) {
-                    //str += "(";
-                }
 				/*if(getPrecedence(root.getRightChild().getVal()) < parentPrecedence) {
 					str += ")";
 				}*/
-            }
         }
 
         return createInfix(root.getLeftChild()) + str + createInfix(root.getRightChild());
