@@ -21,4 +21,19 @@ public class Variable extends Expression {
     public Expression simplify() {
         return this;
     }
+
+    @Override
+    public String getType() {
+        return value;
+    }
+
+    @Override
+    public Expression getLeftChild() {
+        return null;
+    }
+
+    @Override
+    public Expression getRightChild() {
+        return null;
+    }
 }

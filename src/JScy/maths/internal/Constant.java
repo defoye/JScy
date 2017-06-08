@@ -24,4 +24,19 @@ public class Constant extends Expression {
 
         return this;
     }
+
+    @Override
+    public String getType() {
+        return null;
+    }
+
+    @Override
+    public Expression getLeftChild() {
+        return null;
+    }
+
+    @Override
+    public Expression getRightChild() {
+        return null;
+    }
 }

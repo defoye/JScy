@@ -14,8 +14,18 @@ abstract class UnaryNode extends Expression {
         this.type = type;
     }
 
-    public UnaryOperator getType() {
+    public String getType() {
 
-        return type;
+        return type.toString();
+    }
+
+    @Override
+    public Expression getLeftChild() {
+        return null;
+    }
+
+    @Override
+    public Expression getRightChild() {
+        return exp;
     }
 }

@@ -20,9 +20,19 @@ abstract class BinaryNode extends Expression {
         this.type = type;
     }
 
-    public BinaryOperator getType() {
+    public String getType() {
 
-        return type;
+        return type.toString();
+    }
+
+    @Override
+    public Expression getLeftChild() {
+        return left;
+    }
+
+    @Override
+    public Expression getRightChild() {
+        return right;
     }
 }
 

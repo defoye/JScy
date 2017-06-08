@@ -7,6 +7,9 @@ package JScy.maths.internal;
 public abstract class Expression {
     public abstract Expression derive();
     public abstract Expression simplify();
+    public abstract String getType();
+    public abstract Expression getLeftChild();
+    public abstract Expression getRightChild();
 
     enum BinaryOperator {
 
