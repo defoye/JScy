@@ -7,25 +7,11 @@ import java.util.Stack;
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  * @version     1.0
  */
-class ExpressionParser {
+public class ExpressionParser {
 
     private String expression;
     private String var;
     private ArrayList<String> tokens;
-
-    ExpressionParser(String expression) {
-
-        this.expression = expression;
-
-        try {
-            var = check();
-        } catch (InvalidExpressionException e) {
-            e.printStackTrace();
-        }
-
-        this.expression = formatString(expression);
-        tokens = tokenize(expression);
-    }
 
     public String getExpression() {
 
@@ -50,7 +36,7 @@ class ExpressionParser {
         return false;
     }
 
-    public boolean isOperand(String str, String var)
+    public static boolean isOperand(String str, String var)
     {
         if(str.matches("[0-9]+") || str.equals(var))
             return true;
@@ -69,7 +55,7 @@ class ExpressionParser {
         return false;
     }
 
-    private int getPrecedence(String str)
+    public static int getPrecedence(String str)
     {
         int val = 0;
 
@@ -85,12 +71,39 @@ class ExpressionParser {
         return val;
     }
 
-    private boolean isLeftAssociative(String s)
+    public static boolean isLeftAssociative(String s)
     {
         if(s.equals("^") || s.equals("$") || s.equals("+") || s.equals("*"))
             return false;
 
         return true;
+    }
+
+    // modifies the string to look more like it would if someone wrote the expression
+    // out on paper
+    public String readable(String s)
+    {
+        for(int i = 0; i < s.length(); i++) {
+            if(s.substring(i, i + 1).equals("*") && i > 0)
+                if(isOperand(s.substring(i - 1, i), var) && i < s.length() - 1 && s.substring(i + 1, i + 2).equals(var))
+                    s = s.substring(0, i) + s.substring(i + 1);
+        }
+
+        return s;
+    }
+
+    public void parse(String expression) throws InvalidExpressionException {
+
+        this.expression = expression;
+
+        try {
+            var = check();
+        } catch (InvalidExpressionException e) {
+            e.printStackTrace();
+        }
+
+        this.expression = formatString(expression);
+        tokens = tokenize(expression);
     }
 
     private String check() throws InvalidExpressionException {
@@ -307,126 +320,4 @@ class ExpressionParser {
 
         return tokens;
     }
-
-//    private boolean check(String expression) throws Exception {
-//
-//        expression = expression.replaceAll("\\s","");
-//        expression = expression.toLowerCase();
-//
-//        if(expression.length() == 0) {
-//            //errorMessage = "Nothing Entered";
-//            throw new InvalidExpressionException("Empty Expression");
-//            return false;
-//        }
-//
-//        if(!expression.matches("[a-zA-Z0-9+*/^()-]+")) { // contains only operators, numbers, or letters
-//            //errorMessage = "Syntax Error";
-//            throw new InvalidExpressionException("Syntax Error");
-//            return false;
-//        }
-//
-//        if(expression.matches("[+*/^()-]+")) { // doesn't contain any operands
-//            //errorMessage = "Syntax Error";
-//            throw new InvalidExpressionException("Syntax Error");
-//            return false;
-//        }
-//
-//        String firstChar = expression.substring(0, 1);
-//        String lastChar = expression.substring(expression.length() - 1, expression.length());
-//
-//        if(!firstChar.equals("-") && isOperator(firstChar) || firstChar.equals(")") || isOperator(lastChar) || lastChar.equals("(")) {
-//            //errorMessage = "Syntax Error"; //starts with operator or close parenthesis, or ends with operator or open parenthesis
-//            throw new InvalidExpressionException("Syntax Error");
-//            return false;
-//        }
-//
-//
-//        for(int i = 0; i < expression.length(); i++) {
-//
-//            String temp = "";
-//
-//            while(i < expression.length() && expression.substring(i, i + 1).matches("[a-zA-Z]")) {
-//                temp += expression.substring(i, i + 1);
-//                i++;
-//            }
-//
-//            if(temp.length() == 1) {
-//                //i--; // ?? i must be decremented from the above while loop in this if block so the program can check the last character in the string
-//                if(var.length() == 0)
-//                    var = temp;
-//                if(!temp.equals(var)) {
-//                    errorMessage = "Your expression cannot contain two variables";
-//                    return false;
-//                }
-//                else if(i < expression.length() && expression.substring(i, i + 1).matches("[0-9]+")) {
-//                    errorMessage = "Can't do this: " + temp + expression.substring(i, i + 1);
-//                    return false;
-//                }
-//            }
-//            else if(isFunction(temp)) {
-//
-//                if(i < expression.length()) {
-//                    if(!expression.substring(i, i + 1).equals("(")) {
-//                        //System.out.println("Syntax Error: " + temp + " needs a parenthesis after it");// no parenthesis after function (EX: sin5)
-//                        throw new InvalidExpressionException("Syntax Error");
-//                        return false;
-//                    }
-//                }
-//                else {
-//                    //System.out.println("Syntax Error: " + temp + " needs an input"); // nothing after function (EX: 5 + sin)
-//                    throw new InvalidExpressionException("Syntax Error");
-//                    return false;
-//                }
-//            }
-//            else if(temp.length() != 0){
-//                //System.out.println(temp + ": function not found");
-//                throw new InvalidExpressionException(temp + ": function not found");
-//                return false;
-//            }
-//
-//            //i--; // ?? i must be decremented since it was left incremented in the above while loop
-//        }
-//
-//
-//        int cntOpenParen = 0;
-//        int cntCloseParen = 0;
-//
-//        for(int i = 0; i < expression.length() - 1; i++) {
-//
-//            String tmp1 = expression.substring(i, i + 1);
-//            String tmp2 = expression.substring(i + 1, i + 2);
-//
-//            if(tmp1.equals("-")) {
-//                if(isOperator(tmp2) || tmp2.equals(")")) {
-//                    //System.out.println("Syntax Error: " + tmp1 + tmp2);
-//                    throw new InvalidExpressionException("Syntax Error");
-//                    return false;
-//                }
-//            }
-//            else if(tmp2.equals("-")) { // Also prevents next else if from rejecting an operator followed by a unary minus
-//                if(tmp1.equals("(")) {
-//                    //System.out.println("Syntax Error: " + tmp1 + tmp2);
-//                    throw new InvalidExpressionException("Syntax Error");
-//                    return false;
-//                }
-//            }
-//            else if((isOperator(tmp1) || tmp1.equals("(")) && (isOperator(tmp2) || tmp2.equals(")"))) {
-//                //System.out.println("Syntax Error: " + tmp1 + tmp2); // two operands in a row (examples: ++, (+, ())
-//                throw new InvalidExpressionException("Syntax Error");
-//                return false;
-//            }
-//            else if(exp.substring(i, i + 1).equals("("))
-//                cntOpenParen++;
-//            else if(exp.substring(i, i + 1).equals(")"))
-//                cntCloseParen++;
-//        }
-//
-//        if(cntOpenParen < cntCloseParen) { // found a ")" when the end of the expression was expected
-//            //System.out.println("Syntax Error: found ')' but expected end of expression");
-//            throw new InvalidExpressionException("Syntax Error");
-//            return false;
-//        }
-//
-//        return true;
-//    }
 }
