@@ -1,4 +1,4 @@
-package JScy.maths.internal;
+package JScy.mathematics.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
@@ -26,6 +26,12 @@ public class Constant extends Expression {
 
     @Override
     public String getType() {
+
+        // int type
+        if ((value == Math.floor(value)) && !Double.isInfinite(value)) {
+            return String.valueOf((int)value);
+        }
+
         return String.valueOf(value);
     }
 
