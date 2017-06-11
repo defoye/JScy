@@ -5,9 +5,9 @@
  *      TODO: second if statement
  */
 
-package JScy.maths;
+package JScy.mathematics;
 
-import JScy.maths.internal.*;
+import JScy.mathematics.internal.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -92,36 +92,37 @@ public class ExpressionTree {
         }
         else if(ExpressionParser.isFunction(root.getType())) { // does not include unary minus
             str += root.getType();
-            //str += "(";
+            str += "(";
         }
         else {
             int parentPrecedence = ExpressionParser.getPrecedence(root.getType());
 
             str += root.getType();
             if(root.getLeftChild() != null && (ExpressionParser.getPrecedence(root.getLeftChild().getType()) < parentPrecedence || ExpressionParser.isLeftAssociative(root.getLeftChild().getType()))) {
-                //str += "(";
+                str += "(";
             }
-				/*if(getPrecedence(root.getRightChild().getVal()) < parentPrecedence) {
+				if(ExpressionParser.getPrecedence(root.getRightChild().getType()) < parentPrecedence) {
 					str += ")";
-				}*/
+				}
         }
 
         return createInfix(root.getLeftChild()) + str + createInfix(root.getRightChild());
     }
 
     // reads the "tokens" in order from the list and builds a tree
-    private Expression constructTree(ArrayList<String> postTokens)
+    public Expression constructTree(ArrayList<String> postTokens)
     {
         Expression root = null;
         Stack<Expression> nodes = new Stack<>();
 
         for(String str: postTokens)
         {
-            if(str.matches("[0-9]+")) {
+            if(str.matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
                 nodes.push(new Constant(Double.parseDouble(str)));
             }
-            else if(str.equals(var))
+            else if(str.equals(var)) {
                 nodes.push(new Variable(var));
+            }
             else if(!nodes.isEmpty() && ExpressionParser.isFunction(str)) {
                 Expression function = matchFunc(str, nodes.pop());
                 nodes.push(function);
@@ -131,7 +132,8 @@ public class ExpressionTree {
                 nodes.push(unaryMinus);
             }
             else if(!nodes.isEmpty()){
-                Expression binaryOperator = matchOperator(str, nodes.pop(), nodes.pop());
+                Expression right = nodes.pop();
+                Expression binaryOperator = matchOperator(str, nodes.pop(), right);
                 nodes.push(binaryOperator);
             }
         }
@@ -147,12 +149,26 @@ public class ExpressionTree {
         switch(str) {
             case "ln":
                 return new NaturalLogarithm(exp);
+            case "log":
+                return new Logarithm(exp);
+            case "sin":
+                return new Sine(exp);
+            case "cos":
+                return new Cosine(exp);
+            case "tan":
+                return new Tangent(exp);
+            case "csc":
+                return new Cosecant(exp);
+            case "sec":
+                return new Secant(exp);
+            case "cot":
+                return new Cotangent(exp);
             default: System.out.println("Ambiguous function");
                 return null;
         }
     }
 
-    private Expression matchOperator(String str, Expression left, Expression right) {
+    public Expression matchOperator(String str, Expression left, Expression right) {
 
         switch(str) {
             case "+":

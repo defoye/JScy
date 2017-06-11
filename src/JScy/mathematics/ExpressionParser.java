@@ -1,7 +1,8 @@
-package JScy.maths;
+package JScy.mathematics;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Arrays;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
@@ -47,11 +48,7 @@ public class ExpressionParser {
     {
         String[] funcs = {"sin", "cos", "tan", "csc", "sec", "cot", "log", "ln"};
 
-        for(String temp: funcs)
-            if(str.equals(temp))
-                return true;
-
-        return false;
+        return Arrays.asList(funcs).contains(str);
     }
 
     public static int getPrecedence(String str)
