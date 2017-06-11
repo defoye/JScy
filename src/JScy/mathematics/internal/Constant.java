@@ -2,7 +2,6 @@ package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
 public class Constant extends Expression {
 
@@ -27,7 +26,7 @@ public class Constant extends Expression {
 
     @Override
     public String getType() {
-        return null;
+        return String.valueOf(value);
     }
 
     @Override

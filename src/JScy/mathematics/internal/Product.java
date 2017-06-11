@@ -2,7 +2,6 @@ package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
 public class Product extends BinaryNode {
 
@@ -21,6 +20,23 @@ public class Product extends BinaryNode {
 
     @Override
     public Expression simplify() {
+
+        Expression l = left.simplify();
+        Expression r = right.simplify();
+
+        if(l.getType().equals("1")) {
+            return r;
+        }
+        if(r.getType().equals("1")) {
+            return l;
+        }
+        if(l.getType().equals("0")) {
+            return l;
+        }
+        if(r.getType().equals("0")) {
+            return r;
+        }
+
         return null;
     }
 }

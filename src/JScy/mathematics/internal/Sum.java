@@ -2,18 +2,17 @@ package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
-public class NaturalLogarithm extends UnaryNode {
+public class Sum extends BinaryNode {
 
-    public NaturalLogarithm(Expression exp) {
+    public Sum(Expression left, Expression right) {
 
-        super(exp, UnaryOperator.NATURALLOG);
+        super(left, right, BinaryOperator.PLUS);
     }
 
     @Override
     public Expression derive() {
-        return new Quotient(exp.derive(), exp);
+        return new Sum(left.derive(), right.derive());
     }
 
     @Override

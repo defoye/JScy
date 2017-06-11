@@ -2,7 +2,6 @@ package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  *
  * @Deprecated  This class is not supposed to be used by clients
  *              if it is left public

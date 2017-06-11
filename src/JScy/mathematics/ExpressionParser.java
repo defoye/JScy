@@ -5,7 +5,6 @@ import java.util.Stack;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
 public class ExpressionParser {
 
@@ -106,6 +105,10 @@ public class ExpressionParser {
         tokens = tokenize(expression);
     }
 
+    /**
+     * @return
+     * @throws InvalidExpressionException
+     */
     private String check() throws InvalidExpressionException {
 
         expression = expression.replaceAll("\\s","");

@@ -2,7 +2,6 @@ package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
 public abstract class Expression {
     public abstract Expression derive();

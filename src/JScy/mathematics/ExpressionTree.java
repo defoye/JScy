@@ -19,21 +19,24 @@ import java.util.Stack;
  *     UnaryOperation or a BinaryOperation, respectively. </p>
  *
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  * @see <a href="https://en.wikipedia.org/wiki/Binary_expression_tree">
  *      Wikipedia: Binary expression tree</a>
  */
-class ExpressionTree {
+public class ExpressionTree {
 
     private Expression root;
     private String var;
+    private double val;
     private ArrayList<String> tokens;
 
-    ExpressionTree(String var, ArrayList<String> tokens) {
+    public ExpressionTree() {
 
-        this.var = var;
-        this.tokens = tokens;
-        root = constructTree(tokens);
+        init("x", new ArrayList<>());
+    }
+
+   public ExpressionTree(String var, ArrayList<String> tokens) {
+
+        init(var, tokens);
     }
 
     public Expression getRoot() {
@@ -41,8 +44,38 @@ class ExpressionTree {
         return root;
     }
 
+    public double getVal() {
+
+        return val;
+    }
+
+    public void init(String var, ArrayList<String> tokens) {
+        this.var = var;
+        this.val = 0;
+        this.tokens = tokens;
+        root = constructTree(tokens);
+    }
+
+    public void simplify() {
+        root.simplify();
+    }
+
+    public void derive() {
+        root.derive();
+    }
+
+    public void derive(double val) {
+        derive();
+
+        // val = root.evalulate(val);
+    }
+
+    public String toString() {
+        return createInfix(root);
+    }
+
     //creates string representing infix expression
-    private String createInfix(Expression root)
+    public String createInfix(Expression root)
     {
         String str = "";
 
@@ -109,7 +142,7 @@ class ExpressionTree {
         return root;
     }
 
-    private Expression matchFunc(String str, Expression exp) {
+    public Expression matchFunc(String str, Expression exp) {
 
         switch(str) {
             case "ln":

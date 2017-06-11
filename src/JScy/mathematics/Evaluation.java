@@ -4,14 +4,11 @@ import java.util.List;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
 public class Evaluation {
 
     private String expression;
     private String var;
-    private boolean isValid;
-    private List<String> errorMessages;
 
     public String getVar() {
 
@@ -24,10 +21,4 @@ public class Evaluation {
 
         return 0.0;
     }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-
 }

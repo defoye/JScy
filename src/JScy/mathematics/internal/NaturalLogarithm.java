@@ -2,18 +2,17 @@ package JScy.maths.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
- * @version     1.0
  */
-public class Negation extends UnaryNode {
+public class NaturalLogarithm extends UnaryNode {
 
-    public Negation(Expression exp) {
+    public NaturalLogarithm(Expression exp) {
 
-        super(exp, UnaryOperator.NEGATE);
+        super(exp, UnaryOperator.NATURALLOG);
     }
 
     @Override
     public Expression derive() {
-        return new Negation(exp.derive());
+        return new Quotient(exp.derive(), exp);
     }
 
     @Override
