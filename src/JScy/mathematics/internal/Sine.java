@@ -3,11 +3,11 @@ package JScy.mathematics.internal;
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  */
-public class Tangent extends UnaryNode {
+public class Sine extends UnaryNode {
 
-    public Tangent(Expression exp) {
+    public Sine(Expression exp) {
 
-        super(exp, UnaryOperator.TAN);
+        super(exp, UnaryOperator.SIN);
     }
 
     @Override

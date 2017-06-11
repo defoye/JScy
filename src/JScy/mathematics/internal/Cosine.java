@@ -1,10 +1,23 @@
 package JScy.mathematics.internal;
 
 /**
- * <p> This class represents a binary tree that represents an expression
- * such that each node itself is an Expression and contains either
- * one or two children, depending on if that Expression is a
- * UnaryOperation or a BinaryOperation, respectively. </p>
+ * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  */
-public class Cosine {
+public class Cosine extends UnaryNode {
+
+    public Cosine(Expression exp) {
+
+        super(exp, UnaryOperator.COS);
+    }
+
+    @Override
+    public Expression derive() {
+
+        return null;
+    }
+
+    @Override
+    public Expression simplify() {
+        return null;
+    }
 }
