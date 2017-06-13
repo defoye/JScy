@@ -1,6 +1,4 @@
-#JScy
-
-*This project is unfinished and may not include all implementations that are specified below*
+# JScy
 
 JScy is a system for the manipulation of symbolic and numerical expressions that allows clients to use calculus, statistics, mechanics, and artificial intelligence tools with a few lines of code.
 
