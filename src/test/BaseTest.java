@@ -1,13 +1,15 @@
 package test;
 
-import JScy.maths.Calculus;
-import JScy.maths.ExpressionParser;
+import JScy.mathematics.Calculus;
+import JScy.mathematics.ExpressionParser;
+import JScy.mathematics.ExpressionTree;
 
 /**
- *
+ * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  */
 public abstract class BaseTest {
 
     protected ExpressionParser parser = new ExpressionParser();
-    protected Calculus calc = new Calculus();
+    protected ExpressionTree expressionTree = new ExpressionTree();
+    protected Calculus calculus = new Calculus();
 }

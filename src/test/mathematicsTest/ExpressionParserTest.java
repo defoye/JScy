@@ -19,8 +19,8 @@ public class ExpressionParserTest extends BaseTest {
     @Test
     void parse() throws InvalidExpressionException {
 
-        final String QUERY = "-5 + 7(x^2) + ((sin(x)";
-        final String EXPECTED = "$5+7*(x^2)+((sin(x)))";
+        final String QUERY = "-5 + 7((x^2) + ((sin(x))";
+        final String EXPECTED = "$5+7*((x^2)+((sin(x))))";
         parser.parse(QUERY);
         String actual = parser.getExpression();
 
@@ -30,8 +30,8 @@ public class ExpressionParserTest extends BaseTest {
     @Test
     void tokenize() throws InvalidExpressionException {
 
-        final String QUERY = "sin(x) / 5*x";
-        final String[] EXPECTED = {"x", "sin", "5", "x", "*", "/"};
+        final String QUERY = "(5+x) / sin(x)";
+        final String[] EXPECTED = {"5", "x", "+", "x", "sin", "/"};
         parser.parse(QUERY);
         final String[] actual = parser.getTokens().toArray(new String[parser.getTokens().size()]);
 
