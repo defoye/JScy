@@ -1,3 +1,8 @@
+/*
+ *  UNFINISHED
+ *
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -17,13 +22,18 @@ public class Variable extends Expression {
     }
 
     @Override
-    public Expression simplify() {
+    public Expression reduce() {
         return this;
     }
 
     @Override
     public String getType() {
         return value;
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 
     @Override

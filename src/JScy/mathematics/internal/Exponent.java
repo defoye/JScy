@@ -1,11 +1,17 @@
+/*
+ *  UNFINISHED
+ *
+ *  TODO: public Expression simplify()
+ */
+
 package JScy.mathematics.internal;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  */
-class Exponent extends BinaryNode {
+public class Exponent extends BinaryNode {
 
-    Exponent(Expression left, Expression right) {
+    public Exponent(Expression left, Expression right) {
 
         super(left, right, BinaryOperator.POWER);
     }
@@ -13,12 +19,43 @@ class Exponent extends BinaryNode {
     @Override
     public Expression derive() {
 
-        return null;
+        if(left instanceof Constant)
+            return new Constant(0);
+
+        // chain rule
+        return new Product(
+                right,
+                new Product(
+                        left.derive(),
+                        new Exponent(
+                                left,
+                                new Difference(
+                                        right,
+                                        new Constant(1)
+                                )
+                        )
+                )
+        );
     }
 
     @Override
-    public Expression simplify() {
+    public Expression reduce() {
 
-        return new Exponent(left.simplify(), right.simplify());
+        Expression l = left.reduce();
+        Expression r = right.reduce();
+
+        if(r instanceof Constant) {
+            if(((Constant) r).getValue() == 0)
+                return new Constant(1);
+            if(((Constant) r).getValue() == 1)
+                return left;
+        }
+
+        return new Exponent(l, r);
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }

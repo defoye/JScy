@@ -1,3 +1,9 @@
+/*
+ *  UNFINISHED
+ *
+ *  TODO: public Expression simplify()
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -12,11 +18,24 @@ public class Sine extends UnaryNode {
 
     @Override
     public Expression derive() {
-        return null;
+
+        if(exp instanceof Constant)
+            return new Constant(0);
+
+        // chain rule
+        return new Product(
+                exp.derive(),
+                new Cosine(exp)
+        );
     }
 
     @Override
-    public Expression simplify() {
-        return null;
+    public Expression reduce() {
+        return this;
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }

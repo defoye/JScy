@@ -1,3 +1,10 @@
+/*
+ *  UNFINISHED
+ *
+ *  TODO: public Expression derive()
+ *  TODO: public Expression simplify()
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -13,18 +20,24 @@ public class Negation extends UnaryNode {
     @Override
     public Expression derive() {
 
+        if(exp instanceof Cosine)
+            return exp.derive();
+
         return new Negation(exp.derive());
     }
 
     @Override
-    public Expression simplify() {
-
-        Expression e = exp.simplify();
+    public Expression reduce() {
 
         if(exp instanceof Negation) {
             return exp.getRightChild();
         }
 
-        return new Negation(e);
+        return new Negation(exp.reduce());
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }

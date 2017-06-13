@@ -1,3 +1,8 @@
+/*
+ *  UNFINISHED
+ *  TODO: public Expression simplify()
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -12,11 +17,23 @@ public class NaturalLogarithm extends UnaryNode {
 
     @Override
     public Expression derive() {
-        return new Quotient(exp.derive(), exp);
+
+        if(exp instanceof Constant)
+            return new Constant(0);
+
+        return new Quotient(
+                exp.derive(),
+                this
+        );
     }
 
     @Override
-    public Expression simplify() {
-        return null;
+    public Expression reduce() {
+        return this;
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }

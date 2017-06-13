@@ -1,3 +1,5 @@
+
+
 package JScy.mathematics.internal;
 
 /**
@@ -5,8 +7,9 @@ package JScy.mathematics.internal;
  */
 public abstract class Expression {
     public abstract Expression derive();
-    public abstract Expression simplify();
+    public abstract Expression reduce();
     public abstract String getType();
+    public abstract double getValue();
     public abstract Expression getLeftChild();
     public abstract Expression getRightChild();
 

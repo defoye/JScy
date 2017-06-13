@@ -1,3 +1,9 @@
+/*
+ *  UNFINISHED
+ *
+ *  TODO: public Expression simplify()
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -22,37 +28,42 @@ public class Quotient extends BinaryNode {
     }
 
     @Override
-    public Expression simplify() {
+    public Expression reduce() {
 
-       Expression numerator = left.simplify();
-       Expression denominator = right.simplify();
+       Expression n = left.reduce();
+       Expression d = right.reduce();
 
-       if(numerator.getType().equals("0") || denominator.getType().equals("1")) {
-           return numerator;
+       if(n.getType().equals("0") || d.getType().equals("1")) {
+           return n;
        }
-       if(numerator.equals(denominator)) {
+       if(n.equals(d)) {
            return new Constant(1);
        }
-        if (denominator instanceof Quotient) {
-            if (numerator instanceof Quotient) {
+        if (d instanceof Quotient) {
+            if (n instanceof Quotient) {
                 return new Quotient(
-                        new Product(numerator.getLeftChild(), denominator.getRightChild()),
-                        new Product(denominator.getLeftChild(), numerator.getRightChild())
-                ).simplify();
+                        new Product(n.getLeftChild(), d.getRightChild()),
+                        new Product(d.getLeftChild(), n.getRightChild())
+                ).reduce();
             } else {
                 return new Quotient(
-                        new Product(numerator, denominator.getRightChild()),
-                        denominator.getRightChild()
-                ).simplify();
+                        new Product(n, d.getRightChild()),
+                        d.getRightChild()
+                ).reduce();
             }
-        } else if (numerator instanceof Quotient) {
+        } else if (n instanceof Quotient) {
             return new Quotient(
-                    numerator.getLeftChild(),
-                    new Product(denominator, numerator.getRightChild())
-            ).simplify();
+                    n.getLeftChild(),
+                    new Product(d, n.getRightChild())
+            ).reduce();
         }
 
-        return new Quotient(numerator, denominator);
+        return new Quotient(n, d);
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 
     @Override
@@ -65,8 +76,8 @@ public class Quotient extends BinaryNode {
             return true;
         }
 
-        Expression t = simplify();
-        Expression o = ((Expression) object).simplify();
+        Expression t = reduce();
+        Expression o = ((Expression) object).reduce();
 
         if (!(t instanceof Quotient)) {
             return t.equals(o);

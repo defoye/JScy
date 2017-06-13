@@ -1,3 +1,8 @@
+/*
+ *  UNFINISHED
+ *
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -17,13 +22,37 @@ public class Difference extends BinaryNode {
     }
 
     @Override
-    public Expression simplify() {
+    public Expression reduce() {
 
-        Expression l = left.simplify();
-        Expression r = right.simplify();
+        Expression l = left.reduce();
+        Expression r = right.reduce();
 
-        //if()
+        if(l instanceof Constant || r instanceof Constant) {
 
-        return null;
+            if(l.getType().equals("0")) { // Example: 0 - sin(x) => sin(x)
+                return r;
+            }
+            if(r.getType().equals("0")) { // Example: sin(x) - 0 => sin(x)
+                return l;
+            }
+
+            if(l instanceof Constant && r instanceof Constant) {
+                return new Constant(((Constant) l).getValue() - ((Constant) r).getValue());
+            }
+        }
+
+        if(l instanceof Negation) {
+            return new Difference(r, l.getRightChild());
+        }
+        if(r instanceof Negation) {
+            return new Sum(l, r.getRightChild());
+        }
+
+        return new Difference(l, r);
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }

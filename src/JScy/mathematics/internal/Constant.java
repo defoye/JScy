@@ -19,7 +19,7 @@ public class Constant extends Expression {
     }
 
     @Override
-    public Constant simplify() {
+    public Constant reduce() {
 
         return this;
     }
@@ -33,6 +33,10 @@ public class Constant extends Expression {
         }
 
         return String.valueOf(value);
+    }
+
+    public double getValue() {
+        return value;
     }
 
     @Override

@@ -1,3 +1,9 @@
+/*
+ *  UNFINISHED
+ *
+ *  TODO: public Expression simplify()
+ */
+
 package JScy.mathematics.internal;
 
 /**
@@ -16,7 +22,25 @@ public class Sum extends BinaryNode {
     }
 
     @Override
-    public Expression simplify() {
-        return null;
+    public Expression reduce() {
+
+        Expression l = left.reduce();
+        Expression r = right.reduce();
+
+        if(l instanceof Constant || r instanceof Constant) {
+            if(l.getType().equals("0")) {
+                return r;
+            }
+            if(r.getType().equals("0")) {
+                return l;
+            }
+        }
+
+        return new Sum(l, r);
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }
