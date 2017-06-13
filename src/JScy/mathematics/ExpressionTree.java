@@ -8,9 +8,11 @@
 package JScy.mathematics;
 
 import JScy.mathematics.internal.*;
-
+import java.util.Queue;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 /**
  * <p> This class represents a binary tree that represents an expression
@@ -49,6 +51,37 @@ public class ExpressionTree {
         return val;
     }
 
+    public ArrayList<String> getTokens() {
+        return tokens;
+    }
+
+    public void printTree() {
+
+        Queue<Expression> currentLevel = new LinkedList<Expression>();
+        Queue<Expression> nextLevel = new LinkedList<Expression>();
+
+        currentLevel.add(root);
+
+        while (!currentLevel.isEmpty()) {
+            Iterator<Expression> iter = currentLevel.iterator();
+            while (iter.hasNext()) {
+                Expression currentNode = iter.next();
+                if (currentNode.getLeftChild() != null) {
+                    nextLevel.add(currentNode.getLeftChild());
+                }
+                if (currentNode.getRightChild() != null) {
+                    nextLevel.add(currentNode.getRightChild());
+                }
+                System.out.print(currentNode.getType() + " ");
+            }
+            System.out.println();
+            currentLevel = nextLevel;
+            nextLevel = new LinkedList<Expression>();
+
+        }
+        System.out.println("==================");
+    }
+
     public void init(String var, ArrayList<String> tokens) {
         this.var = var;
         this.val = 0;
@@ -56,15 +89,16 @@ public class ExpressionTree {
         root = constructTree(tokens);
     }
 
-    public void simplify() {
-        root.simplify();
+    public void reduce() {
+        root = root.reduce();
     }
 
     public void derive() {
-        root.derive();
+        root = root.derive();
     }
 
     public void derive(double val) {
+
         derive();
 
         // val = root.evalulate(val);
@@ -78,6 +112,9 @@ public class ExpressionTree {
     public String createInfix(Expression root)
     {
         String str = "";
+        String closeParen = "";
+        String leftOpenParen = "";
+        String leftCloseParen = "";
 
         if(root == null) {
             return str;
@@ -93,20 +130,24 @@ public class ExpressionTree {
         else if(ExpressionParser.isFunction(root.getType())) { // does not include unary minus
             str += root.getType();
             str += "(";
+            closeParen = ")";
         }
-        else {
+        else { // is operator
             int parentPrecedence = ExpressionParser.getPrecedence(root.getType());
 
             str += root.getType();
-            if(root.getLeftChild() != null && (ExpressionParser.getPrecedence(root.getLeftChild().getType()) < parentPrecedence || ExpressionParser.isLeftAssociative(root.getLeftChild().getType()))) {
-                str += "(";
+            if(ExpressionParser.isOperator(root.getLeftChild().getType()) && (ExpressionParser.getPrecedence(root.getLeftChild().getType()) < parentPrecedence)) {
+                leftOpenParen = "(";
+                leftCloseParen = ")";
             }
-				if(ExpressionParser.getPrecedence(root.getRightChild().getType()) < parentPrecedence) {
-					str += ")";
-				}
+			else if(ExpressionParser.isOperator(root.getRightChild().getType()) && (ExpressionParser.getPrecedence(root.getRightChild().getType()) < parentPrecedence)) {
+					str += "(";
+					closeParen = ")";
+
+            }
         }
 
-        return createInfix(root.getLeftChild()) + str + createInfix(root.getRightChild());
+        return leftOpenParen + createInfix(root.getLeftChild()) + leftCloseParen + str + createInfix(root.getRightChild()) + closeParen;
     }
 
     // reads the "tokens" in order from the list and builds a tree
@@ -117,6 +158,9 @@ public class ExpressionTree {
 
         for(String str: postTokens)
         {
+            if(str.isEmpty()){
+                continue;
+            }
             if(str.matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
                 nodes.push(new Constant(Double.parseDouble(str)));
             }
@@ -163,7 +207,7 @@ public class ExpressionTree {
                 return new Secant(exp);
             case "cot":
                 return new Cotangent(exp);
-            default: System.out.println("Ambiguous function");
+            default: System.out.println("BINARYEXPRESSIONTREE: Ambiguous function: " + str + " " + str.isEmpty());
                 return null;
         }
     }
@@ -179,8 +223,9 @@ public class ExpressionTree {
                 return new Product(left, right);
             case "/":
                 return new Quotient(left, right);
-
-            default: System.out.println("Ambiguous function");
+            case "^":
+                return new Exponent(left, right);
+            default: System.out.println("BINARYEXPRESSIONTREE: Ambiguous operator: " + str + " " + str.isEmpty());
                 return null;
         }
     }

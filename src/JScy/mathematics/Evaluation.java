@@ -1,6 +1,4 @@
-package JScy.maths;
-
-import java.util.List;
+package JScy.mathematics;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>

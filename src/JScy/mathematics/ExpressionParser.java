@@ -53,6 +53,9 @@ public class ExpressionParser {
 
     public static int getPrecedence(String str)
     {
+        if(isFunction(str))
+            return 5;
+
         int val = 0;
 
         if(str.equals("+"))

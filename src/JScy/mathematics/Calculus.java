@@ -1,43 +1,47 @@
-package JScy.maths;
+package JScy.mathematics;
 
 /**
  * @author      Ernest DeFoy <erniedefoy@yahoo.com>
  */
-public final class Calculus {
+public class Calculus {
 
     public static String derive(String expression) throws InvalidExpressionException {
 
         ExpressionTree expTree = parseToTree(expression);
 
+        expTree.printTree();
         expTree.derive();
-
+        expTree.printTree();
+        expTree.reduce();
+        expTree.printTree();
         return expTree.toString();
     }
 
-    public static double derive(String expression, double val) throws InvalidExpressionException {
+    public static final double derive(String expression, double val) throws InvalidExpressionException {
 
         ExpressionTree expTree = parseToTree(expression);
 
         expTree.derive();
+        expTree.reduce();
 
         return expTree.getVal();
     }
 
-    public static String simplify(String expression) throws InvalidExpressionException {
+    public static String reduce(String expression) throws InvalidExpressionException {
 
         ExpressionTree expTree = parseToTree(expression);
 
-        expTree.simplify();
+        expTree.reduce();
 
         return expTree.toString();
     }
 
-    public static double evaluate(String expression) throws InvalidExpressionException {
+    public static final double evaluate(String expression) throws InvalidExpressionException {
 
         return 0.0;
     }
 
-    private static ExpressionTree parseToTree(String expression) throws InvalidExpressionException {
+    private static final ExpressionTree parseToTree(String expression) throws InvalidExpressionException {
 
         ExpressionParser parser = new ExpressionParser();
         parser.parse(expression);
