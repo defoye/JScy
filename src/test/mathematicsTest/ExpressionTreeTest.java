@@ -37,18 +37,6 @@ public class ExpressionTreeTest extends BaseTest {
     }
 
     @Test
-    void simplify() {
-    }
-
-    @Test
-    void derive() {
-    }
-
-    @Test
-    void derive1() {
-    }
-
-    @Test
     void treeToString() {
     }
 
@@ -74,13 +62,5 @@ public class ExpressionTreeTest extends BaseTest {
         final String actual = expressionTree.toString();
 
         Assertions.assertEquals(EXPECTED, actual);
-    }
-
-    @Test
-    void matchFunc() {
-    }
-
-    @Test
-    void matchOperator() {
     }
 }

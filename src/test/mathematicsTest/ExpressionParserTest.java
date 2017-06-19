@@ -17,7 +17,7 @@ import test.BaseTest;
 public class ExpressionParserTest extends BaseTest {
 
     @Test
-    void parse() throws InvalidExpressionException {
+    void testParse() throws InvalidExpressionException {
 
         final String QUERY = "-5 + 7((x^2) + ((sin(x))";
         final String EXPECTED = "$5+7*((x^2)+((sin(x))))";
@@ -28,7 +28,7 @@ public class ExpressionParserTest extends BaseTest {
     }
 
     @Test
-    void tokenize() throws InvalidExpressionException {
+    void testTokenize() throws InvalidExpressionException {
 
         final String QUERY = "(5+x) / sin(x)";
         final String[] EXPECTED = {"5", "x", "+", "x", "sin", "/"};
@@ -39,49 +39,13 @@ public class ExpressionParserTest extends BaseTest {
     }
 
     @Test
-    void readable() throws InvalidExpressionException {
+    void testFormat() throws InvalidExpressionException {
 
         final String QUERY = "5x + 7*x^2";
         final String EXPECTED = "5x + 7x^2";
         parser.parse(QUERY);
-        String actual = parser.readable(QUERY);
+        String actual = parser.format(QUERY);
 
         Assertions.assertEquals(EXPECTED, actual);
-    }
-
-    @Test
-    void isOperator() {
-    }
-
-    @Test
-    void isOperand() {
-    }
-
-    @Test
-    void isFunction() {
-
-        final String QUERY = "csc";
-        final boolean EXPECTED = true;
-        final boolean actual = parser.isFunction(QUERY);
-
-        Assertions.assertEquals(EXPECTED, actual);
-    }
-
-    @Test
-    void isFunction2() {
-
-        final String QUERY = "csce";
-        final boolean EXPECTED = false;
-        final boolean actual = parser.isFunction(QUERY);
-
-        Assertions.assertEquals(EXPECTED, actual);
-    }
-
-    @Test
-    void getPrecedence() {
-    }
-
-    @Test
-    void isLeftAssociative() {
     }
 }
