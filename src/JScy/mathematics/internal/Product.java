@@ -19,9 +19,15 @@ public class Product extends BinaryNode {
 
     @Override
     public Expression derive() {
+
+        Expression l = left.derive();
+        Expression r = right.derive();
+
+
+
         return new Sum(
-                new Product(left.derive(), right),
-                new Product(left, right.derive())
+                new Product(l, right),
+                new Product(left, r)
         );
     }
 
@@ -49,11 +55,18 @@ public class Product extends BinaryNode {
             if(l instanceof Constant && r instanceof Constant) { // Ex: 5*5 (polish: 55*) ==> 25
                 return new Constant(l.getValue() * r.getValue());
             }
-            if(!(l instanceof Constant) && r instanceof Constant) { // Ex: x*5 (polish: x5*) ==> 5*x
+            if(!(l instanceof Constant)) { // Ex: x*5 (polish: x5*) ==> 5*x
                 Expression tmp = l;
                 l = r;
                 r = tmp;
             }
+        }
+
+        // Ex: x^2 * C ==> C * x^2
+        if(l instanceof Exponent) {
+            Expression tmp = l;
+            l = r;
+            r = tmp;
         }
 
         // C*x*C*x ==> (C*C)*(x*x)

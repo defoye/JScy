@@ -29,15 +29,15 @@ public class Difference extends BinaryNode {
 
         if(l instanceof Constant || r instanceof Constant) {
 
-            if(l.getType().equals("0")) { // Example: 0 - sin(x) => sin(x)
-                return r;
+            if(l.getValue() == 0) { // Example: 0 - sin(x) => -sin(x)
+                return new Negation(r);
             }
-            if(r.getType().equals("0")) { // Example: sin(x) - 0 => sin(x)
+            if(r.getValue() == 0) { // Example: sin(x) - 0 => sin(x)
                 return l;
             }
 
             if(l instanceof Constant && r instanceof Constant) {
-                return new Constant(((Constant) l).getValue() - ((Constant) r).getValue());
+                return new Constant(l.getValue() - r.getValue());
             }
         }
 

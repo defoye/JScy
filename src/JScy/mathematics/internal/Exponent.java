@@ -45,9 +45,9 @@ public class Exponent extends BinaryNode {
         Expression r = right.reduce();
 
         if(r instanceof Constant) {
-            if(((Constant) r).getValue() == 0)
+            if(r.getValue() == 0)
                 return new Constant(1);
-            if(((Constant) r).getValue() == 1)
+            if(r.getValue() == 1)
                 return left;
         }
 

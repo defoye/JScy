@@ -29,11 +29,13 @@ public class Negation extends UnaryNode {
     @Override
     public Expression reduce() {
 
-        if(exp instanceof Negation) {
-            return exp.getRightChild();
+        Expression e = exp.reduce();
+
+        if(e instanceof Negation) {
+            return e.getRightChild();
         }
 
-        return new Negation(exp.reduce());
+        return new Negation(e);
     }
 
     @Override
